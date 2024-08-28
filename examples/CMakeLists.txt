@@ -29,6 +29,7 @@ list(APPEND tests
     docstring
     return_array
     intent_out_size
+    f2py_string_input
 )
 
 foreach(test ${tests})

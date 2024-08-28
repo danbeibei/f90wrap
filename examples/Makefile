@@ -24,6 +24,7 @@ EXAMPLES = arrayderivedtypes \
 	type_check \
 	derivedtypes_procedure \
 	return_array \
+	f2py_string_input \
 	optional_string \
 	long_subroutine_name \
 	kind_map_default \
