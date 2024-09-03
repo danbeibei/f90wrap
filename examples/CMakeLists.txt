@@ -30,6 +30,7 @@ list(APPEND tests
     return_array
     intent_out_size
     f2py_string_input
+    type_check
 )
 
 foreach(test ${tests})
