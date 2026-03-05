@@ -15,16 +15,18 @@ char abort_message[ABORT_BUFFER_SIZE];
 
 void f90wrap_abort_(char *message, int len_message)
 {
-  strncpy(abort_message, message, ABORT_BUFFER_SIZE);
-  abort_message[ABORT_BUFFER_SIZE-1] = '\0';
+  int copy_len = len_message < ABORT_BUFFER_SIZE - 1 ? len_message : ABORT_BUFFER_SIZE - 1;
+  strncpy(abort_message, message, copy_len);
+  abort_message[copy_len] = '\0';
   longjmp(environment_buffer, 0);
 }
 
 // copy of f90wrap_abort_ with a second underscore
 void f90wrap_abort__(char *message, int len_message)
 {
-  strncpy(abort_message, message, ABORT_BUFFER_SIZE);
-  abort_message[ABORT_BUFFER_SIZE-1] = '\0';
+  int copy_len = len_message < ABORT_BUFFER_SIZE - 1 ? len_message : ABORT_BUFFER_SIZE - 1;
+  strncpy(abort_message, message, copy_len);
+  abort_message[copy_len] = '\0';
   longjmp(environment_buffer, 0);
 }
 
