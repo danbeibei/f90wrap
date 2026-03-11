@@ -1328,9 +1328,12 @@ import numpy as np
         %(mod_name)s.%(subroutine_name)s(%(handle)s)
     array_hash = hash((array_ndim, array_type, tuple(array_shape), array_handle))
     if array_hash not in %(selfdot)s_arrays:
-        %(selfdot)s_arrays[array_hash] = f90wrap.runtime.get_array(f90wrap.runtime.sizeof_fortran_t,
-                                %(handle)s,
-                                %(mod_name)s.%(subroutine_name)s)
+        try:
+            %(selfdot)s_arrays[array_hash] = f90wrap.runtime.get_array(f90wrap.runtime.sizeof_fortran_t,
+                                    %(handle)s,
+                                    %(mod_name)s.%(subroutine_name)s)
+        except TypeError:
+            %(selfdot)s_arrays[array_hash] = f90wrap.runtime.direct_c_array(array_type, array_shape, array_handle)
     # Convert array of strings into array of encoded characters
     import numpy as np
     char_array = np.array([np.frombuffer(s[:array_shape[0]].ljust(array_shape[0]).encode(), dtype=np.uint8) for s in %(el_name)s[:array_shape[1]]], dtype=np.uint8).T
