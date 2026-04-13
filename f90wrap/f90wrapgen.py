@@ -1409,10 +1409,14 @@ end type %(typename)s%(suffix)s"""
         # Check if the type has recursive definition:
         same_type = ft.strip_type(t.name) == ft.strip_type(el.type)
 
-        expanded_type = ft.f2f_kind(el.type, self._defines)
+        expanded_type = el.type
+        if not ft.is_derived_type(el.type):
+            expanded_type = ft.f2f_kind(el.type, self._defines)
 
-        if expanded_type.startswith("type") and not same_type:
-            owner_module = self._type_owner(expanded_type, getattr(t, "mod_name", getattr(t, "name", None)))
+        if ft.is_derived_type(expanded_type) and not same_type:
+            owner_module = self._type_owner(
+                expanded_type, getattr(t, "mod_name", getattr(t, "name", None))
+            )
             self._add_extra_use(extra_uses, owner_module, None)
 
         # Prepend prefix to element name
